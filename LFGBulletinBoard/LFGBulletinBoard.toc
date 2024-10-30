@@ -11,7 +11,7 @@ LibGPIMinimapButton.lua
 LibGPIToolBox.lua
 Chat.lua
 Localization.lua
-dungeons/wotlk.lua
+dungeons\wrath.lua
 CustomCategories.lua
 Dungeons.lua
 Tags.lua

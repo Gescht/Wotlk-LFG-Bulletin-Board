@@ -864,3 +864,4 @@ function GBB.LocalizationInit()
 	end
 	return localizedStrings
 end
+print("local load complete")

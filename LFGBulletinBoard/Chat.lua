@@ -166,3 +166,5 @@ function GBB.CreateChannelPulldown (frame, level, menuList)
 		UIDropDownMenu_AddButton(info)
 	end
 end
+
+print("chat load complete")
