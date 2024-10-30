@@ -17,7 +17,8 @@ local USER_KEY_IDX_CAPTURE = "USER_CATEGORY_(%d+)"
 -- "Learning this trait will lock you to this path.|nThis can't be undone."" => "|nThis can't be undone."
 -- note: remember check for zh the "period". Also, missing newline in deDE so fallback to empty string.
 local PERMANENT_ACTION_WARNING = "|nThis can't be undone."
-local CONFIRM_REMOVAL = CONFIRM_GLYPH_REMOVAL:gsub("%%s", "\"%%s\"") -- "Are you sure you want to remove \"%s\"?"
+--[[local CONFIRM_REMOVAL = CONFIRM_GLYPH_REMOVAL:gsub("%%s", "\"%%s\"") -- "Are you sure you want to remove \"%s\"?"]]
+local CONFIRM_REMOVAL = "Are you sure you want to remove \"%s\"?"
 ---@type "Are you sure you want to remove \"%s\"?|nThis action cannot be undone."
 local FILTER_REMOVAL_WARNING = CONFIRM_REMOVAL..PERMANENT_ACTION_WARNING 
 local CHARACTER_SPECIFIC_SYMBOL = "\42" -- "*"
