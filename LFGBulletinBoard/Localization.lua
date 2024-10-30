@@ -25,9 +25,10 @@ local preLocalizedFallbacks = {
 	["lfg_channel"]= (function()
 		-- related issues: #207
 		-- client specific Id's here: https://wago.tools/db2/ChatChannels?build=4.4.0.54986
-		local lfgChannelID = isClassicEra and 24 or 26
+		--[[local lfgChannelID = isClassicEra and 24 or 26
 		local localizedName = C_ChatInfo.GetChannelShortcutForChannelID(lfgChannelID)
-		return localizedName
+		return localizedName]]
+		return "lookingforgroup"
 	end)(),
 	["world_channel"] = CHANNEL_CATEGORY_WORLD,
 	["GuildChannel"] = GUILD_CHAT,

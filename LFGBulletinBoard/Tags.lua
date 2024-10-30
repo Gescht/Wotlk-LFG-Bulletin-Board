@@ -3,7 +3,7 @@ local TOCNAME,
 	GBB = ...;
 
 local isClassicEra = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
-local isSoD = isClassicEra and (C_Seasons.GetActiveSeason() == Enum.SeasonID.SeasonOfDiscovery)
+--[[local isSoD = isClassicEra and (C_Seasons.GetActiveSeason() == Enum.SeasonID.SeasonOfDiscovery)]]
 -- IMPORTANT, everything must be in low-case and with now space!
 ---@param source table<string, string>
 ---@return table<string, string[]>

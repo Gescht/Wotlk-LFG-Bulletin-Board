@@ -233,10 +233,21 @@ function GBB.JoinLFG()
 				local generalID = general and GetChannelName(general)
 				local tradeOrDefenseID = localDefense and GetChannelName(localDefense) -- trade in main cities.
 				if (generalID and generalID > 0) or (tradeOrDefenseID and tradeOrDefenseID > 0) then
-					local numChannelsJoined = C_ChatInfo.GetNumActiveChannels() or 0
+					--[[local numChannelsJoined = C_ChatInfo.GetNumActiveChannels() or 0]]
+					local numChannelsJoined = 0
+					local channelList = GetChannelList()
+					print("1 ",channelList)
+					for _ in pairs(channelList) do
+						numChannelsJoined = numChannelsJoined + 1
+					end
+					print("2 ",numChannelsJoined)
+					numChannelsJoined = numChannelsJoined / 2
+					print("3 ",numChannelsJoined)
 					local nextAvailableChannelIndex = numChannelsJoined + 1
 					for i = 1, numChannelsJoined do
-						if not C_ChatInfo.GetChannelInfoFromIdentifier(i) then
+						--[[if not C_ChatInfo.GetChannelInfoFromIdentifier(i) then]]
+						print("4 ",GetChannelName(i))
+						if not GetChannelName(i) then
 							nextAvailableChannelIndex = i
 							break
 						end
@@ -247,13 +258,16 @@ function GBB.JoinLFG()
 					else
 						_, name = JoinTemporaryChannel(GBB.L["lfg_channel"]);
 					end
-					local info = C_ChatInfo.GetChannelInfoFromIdentifier(name or "")
+					--[[local info = C_ChatInfo.GetChannelInfoFromIdentifier(name or "")]]
+					local info = GetChannelName(name or "")
+					print("5 ",info[1])
+					print("6 ",info[2])
 					if info then
 						-- notify user that the addon has joined the channel.
 						DEFAULT_CHAT_FRAME:AddMessage(
 							GBB.MSGPREFIX..CHAT_YOU_JOINED_NOTICE:format(
-								info.localID,
-								("%d. %s"):format(info.localID, info.name)
+								info[1],
+								("%d. %s"):format(info[1], info[2])
 							), Chat_GetChannelColor(ChatTypeInfo["CHANNEL"])
 						)
 					else
