@@ -23,9 +23,8 @@ local CONFIRM_REMOVAL = "Are you sure you want to remove \"%s\"?"
 local FILTER_REMOVAL_WARNING = CONFIRM_REMOVAL..PERMANENT_ACTION_WARNING 
 local CHARACTER_SPECIFIC_SYMBOL = "\42" -- "*"
 
-local isClassicEra = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
-local isCataclysm = WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC
-local isSoD = isClassicEra and C_Seasons.GetActiveSeason() == Enum.SeasonID.SeasonOfDiscovery
+local isWrath = GetBuildInfo() == "3.3.5"
+local isCataclysm = GetBuildInfo() == "4.3.4"
 
 ---@alias Locale "enUS"|"enGB"|"deDE"|"ruRU"|"frFR"|"zhTW"|"zhCN"|"ptBR"|"esES"|"koKR"
 
@@ -43,7 +42,7 @@ local presets = {
     RDF = { -- Random Dungeon Finder
         name = LFG_TYPE_RANDOM_DUNGEON,
         tags = {
-            enUS = "rdf random dungeons spam heroics gamma gammas",
+            enUS = "rdf random dungeons spam heroics gamma gammas asc ascended rasc",
             -- deDE = nil,
             -- ruRU = nil,
             -- frFR = nil,
@@ -54,38 +53,8 @@ local presets = {
         },
         key = "RDF",
         levels = CopyTable(HIDDEN_LEVEL_RANGE),
-        isDisabled = not isCataclysm,
+        isDisabled = not isWrath,
         sortIdx = 1,
-    },
-    BLOOD = { -- Bloodmoon Event (SoD)
-        name = "Bloodmoon",
-        tags = {
-            enUS = "blood bloodmoon bm",
-        },
-        key = "BLOOD",
-        levels = CopyTable(HIDDEN_LEVEL_RANGE),
-        isDisabled = not isSoD,
-        sortIdx = 1,
-    },
-    BRE = { -- Blackrock Eruption (SoD)
-        name = "Blackrock Eruption",
-        tags = {
-            enUS = "eruption bre brm dailys dialies dailies daily",
-        },
-        key = "BRE",
-        levels = CopyTable(HIDDEN_LEVEL_RANGE),
-        isDisabled = not isSoD,
-        sortIdx = 1,
-    },
-    INCUR = { -- Incursion Event (SoD)
-        name = "Incursions",
-        tags = {
-            enUS = "inc incur incursion incursions loops",
-        },
-        key = "INCUR",
-        levels = CopyTable(HIDDEN_LEVEL_RANGE),
-        isDisabled = not isSoD,
-        sortIdx = 2,
     },
     BOOSTS = {
         name = "Boosting Services",
@@ -96,7 +65,7 @@ local presets = {
         levels = CopyTable(HIDDEN_LEVEL_RANGE),
         isDisabled = false,
         sortIdx = 2,
-    }, 
+    },
 }
 
 --- Initializes and validates saved variable table entries for custom user filters/categories.
