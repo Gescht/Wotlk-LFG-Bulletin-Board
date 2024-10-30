@@ -1,5 +1,5 @@
 local TOCNAME,
-	---@class Addon_Localization
+	---@class Addon_LocalizationdungeonSecondTags
 	GBB=...;
 
 local isClassicEra = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
@@ -35,11 +35,11 @@ local preLocalizedFallbacks = {
 	["msgLevelRange"] = LFD_LEVEL_FORMAT_RANGE:gsub("%(", ("(%s "):format(LEVEL)),
 	["msgLevelRangeShort"]= LFD_LEVEL_FORMAT_RANGE:gsub("%s", ""),
 	["msgAddNote"] = SET_FRIENDNOTE_LABEL,
-	["msgLocalRestart"] = REQUIRES_RELOAD,
+	["msgLocalRestart"] = "Requires Reload",
 	["heroicAbr"] = initialChar(PLAYER_DIFFICULTY2),
 	["normalAbr"] = initialChar(PLAYER_DIFFICULTY1),
 	["raidAbr"] = initialChar(LFG_TYPE_RAID),
-	["msgFontSize"] = ("%s (%s)"):format(FONT_SIZE, REQUIRES_RELOAD),
+	["msgFontSize"] = ("%s (%s)"):format(FONT_SIZE, "Requires Reload"),
 
 	-- option panel
 	["HeaderSettings"] = SETTINGS,
