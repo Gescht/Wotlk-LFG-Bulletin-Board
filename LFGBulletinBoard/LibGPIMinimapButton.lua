@@ -7,7 +7,6 @@ local MinimapButton=Addon.MinimapButton
 local LibDBIcon = LibStub and LibStub("LibDBIcon-1.0", true)
 MinimapButton.isLibDBIconAvailable = not not LibDBIcon;
 local SavedVarHandle = Addon.OptionsBuilder.GetSavedVarHandle
-print("l2")
 
 local function BottomZoom(button)
 	local deltaX, deltaY = 0, 0
