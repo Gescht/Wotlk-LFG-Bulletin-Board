@@ -2,7 +2,10 @@ local TOCNAME,
 	---@class Addon_Tags: Addon_Dungeons
 	GBB = ...;
 
-local isClassicEra = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+
+local isWrath = GetBuildInfo() == "3.3.5"
+local isCata = GetBuildInfo() == "4.3.4"
+
 --[[local isSoD = isClassicEra and (C_Seasons.GetActiveSeason() == Enum.SeasonID.SeasonOfDiscovery)]]
 -- IMPORTANT, everything must be in low-case and with now space!
 ---@param source table<string, string>
@@ -67,8 +70,8 @@ local badTags = {
 
 --- Heroic Tags: for identifying dungeon/raid difficulties
 local heroicTags = {
-	enGB = "h hc heroic",
-	deDE = "h hc heroic",
+	enGB = "h hc heroic asc ascended",
+	deDE = "h hc heroic asc ascended",
 	ruRU = "гер героик",
 	frFR = "h hc heroic hm hero heroique",
 	zhTW = "h 英雄",
@@ -121,13 +124,6 @@ local dungeonTags = {
 		zhTW = nil,
 		zhCN = nil,
 	},
-	CRY = { -- Crystal vale
-		enGB = "crystal vale thunderan thunderaan",
-		ruRU = nil,  
-		frFR = nil,  
-		zhTW = nil,
-		zhCN = nil,
-	},
 	AZN = { -- Azjol-Nerub
 		enGB = "azn an nerub",
 		deDE = nil,
@@ -138,8 +134,8 @@ local dungeonTags = {
 	},
 	BH = { -- Baradin Hold
 		enGB = "bh baradin",
-		ruRU = nil,  
-		frFR = nil,  
+		ruRU = nil,
+		frFR = nil,
 		zhTW = nil,
 		zhCN = nil,
 	},
@@ -149,7 +145,7 @@ local dungeonTags = {
 		ruRU = "бт иллидан илидан",
 		frFR = nil,
 		zhTW = "黑暗神廟 黑廟",
-		zhCN = "黑暗神庙 黑庙", 
+		zhCN = "黑暗神庙 黑庙",
 	},
 	BFD = { -- Blackfathom Deeps
 		enGB = "bfd blackfathom fathom",
@@ -161,8 +157,8 @@ local dungeonTags = {
 	},
 	BRC = { -- Blackrock Caverns
 		enGB = "brc",
-		ruRU = nil,  
-		frFR = nil,  
+		ruRU = nil,
+		frFR = nil,
 		zhTW = nil,
 		zhCN = nil,
 	},
@@ -208,14 +204,6 @@ local dungeonTags = {
 		zhTW = nil,
 		zhCN = nil,
 	},
-	DFC = { -- Demon Fall Canyon
-		enGB = "demonfall dfc demon fall canyon",
-		deDE = nil,
-		ruRU = nil,
-		frFR = nil,
-		zhTW = nil,
-		zhCN = nil,
-	},
 	DM = { -- Deadmines
 		enGB = "deadmines vc vancleef dead mines mine",
 		deDE = "todesminen todesmine tm",
@@ -228,7 +216,7 @@ local dungeonTags = {
 	-- When changing tag strings for diremaul dungeons make sure to consider
 	-- other versions of the game since the wings might be referred to differently. 
 	DMW = { -- Dire Maul - Capital Gardens (DMW pre-cata)
-		enGB = "dmw dmwest west",
+		enGB = "dmw dmwest west dm:w",
 		deDE = "dbw dbwest",
 		ruRU = "дмв запад дмзапад",
 		frFR = "ouest",
@@ -236,7 +224,7 @@ local dungeonTags = {
 		zhCN = "厄运西",
 	},
 	DMN = { -- Dire Maul - Gordok Commons (DMN pre-cata)
-		enGB = "dmn dmnorth north tribute",
+		enGB = "dmn dmnorth north tribute dm:n",
 		deDE = "tribut dbn nord dbnord",
 		ruRU = "дмн дмсевер север трибут трибьют",
 		frFR = "tribut nord",
@@ -244,7 +232,7 @@ local dungeonTags = {
 		zhCN = "厄运北 完美厄运",
 	},
 	DME = { -- Dire Maul - Warpwood Quarter (DME pre-cata)
-		enGB = "dme dmeast east puzilin jumprun",
+		enGB = "dme dmeast east puzilin jumprun dm:e",
 		deDE = "ost dbo dbost",
 		ruRU = "восток вдм дмвосток джампран",
 		frFR = "htest",
