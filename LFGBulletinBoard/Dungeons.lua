@@ -2,9 +2,9 @@ local TOCNAME,
 	---@class Addon_Dungeons : Addon_DungeonData	
 	GBB = ...;
 
-local isClassicEra = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
---[[local isCata = WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC
-local isSoD = isClassicEra and C_Seasons.GetActiveSeason() == Enum.SeasonID.SeasonOfDiscovery]]
+
+local isWrath = GetBuildInfo() == "3.3.5"
+local isCata = GetBuildInfo() == "4.3.4"
 
 local debug = false
 local print = function(...) if debug then print('['..TOCNAME.."] ",...) end end
@@ -717,12 +717,6 @@ GBB.VanillaDungeonKeys = GBB.GetSortedDungeonKeys(
 -- table used in Tags.lua for determining which tags are safe for game version
 GBB.Misc = {"MISC", "TRADE", "TRAVEL"}
 
--- clear unused dungeons in classic to not generate options/checkboxes with the-
--- new data pipeline api these tables should already empty anyways when in classic client
-if isClassicEra then
-	tbcDungeonNames = {}
-	wotlkDungeonNames = {}
-end
 
 ---@param additonalCategories (string[]|string[][])?
 function GBB.GetDungeonSort(additonalCategories)
@@ -787,14 +781,10 @@ function GBB.GetDungeonSort(additonalCategories)
 	return dungeonSort
 end
 
-if isClassicEra then
-	GBB.dungeonLevel = mergeTables(classicDungeonLevels, miscCatergoriesLevels)
-else
-	GBB.dungeonLevel = mergeTables(
-		GBB.GetDungeonLevelRanges(), -- all dungeon types, all expansions
-		miscCatergoriesLevels
-	)
-end
+GBB.dungeonLevel = mergeTables(
+	GBB.GetDungeonLevelRanges(), -- all dungeon types, all expansions
+	miscCatergoriesLevels
+)
 
 -- needed because Option.lua hardcodes a checkbox for "DEADMINES"
 GBB.dungeonLevel["DEADMINES"] = GBB.dungeonLevel["DM"]
