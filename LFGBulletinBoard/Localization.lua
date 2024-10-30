@@ -2,7 +2,8 @@ local TOCNAME,
 	---@class Addon_LocalizationdungeonSecondTags
 	GBB=...;
 
-local isClassicEra = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+local isWrath = GetBuildInfo() == "3.3.5"
+local isCata = GetBuildInfo() == "4.3.4"
 
 ---Supports utf8 strings for non-english clients
 local initialChar = function(str)
