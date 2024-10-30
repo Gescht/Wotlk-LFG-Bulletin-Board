@@ -2,7 +2,7 @@
 local tocName, 
     ---@class Addon_DungeonData : Addon_LibGPIOptions
     addon = ...;
---check if we are on wotlk client
+--check if we are on wrath client
 if GetBuildInfo() ~= "3.3.5" then return end
 assert(GetLFGDungeonInfo, tocName .. " requires the API `GetLFGDungeonInfo` for parsing dungeon info")
 assert(GetRealZoneText, tocName .. " requires the API `GetRealZoneText` for parsing dungeon info")
@@ -30,8 +30,9 @@ local DungeonType = {
 	-- thinking of using 8 for "Rated" for rbgs and arenas to be sorted after normal bgs. 
 }
 
-local cataMaxLevel = GetMaxLevelForExpansionLevel(Expansions.Cataclysm)
-local isCataLevel = UnitLevel("player") >= (cataMaxLevel - 2) -- when to show Heroic DM & SFK as part of cata.
+local wrathMaxLevel = 80
+--could be used for swp and bt timewalking
+local isWrathLevel = UnitLevel("player") >= (wrathMaxLevel - 2) -- when to show Heroic DM & SFK as part of cata.
 
 local isHolidayActive = function(key)
 	local seasonal = {
@@ -57,22 +58,22 @@ end
 -- If a tag's Key is missing from here or the ActivityIDs table, the tags will not be registered.
 -- Modifications to keys in these tables should be reflected in the `Tags.lua` file and vice versa.
 local LFGDungeonIDs = {
-	RBG = 358,	-- 10v10 Rated Battleground (RBG)
+	--RBG = 358,	-- 10v10 Rated Battleground (RBG)
 	AQ20 = 160,	-- Ahn'Qiraj Ruins
 	AQ40 = 161,	-- Ahn'Qiraj Temple
 	ANK = 218,	-- Ahn'kahet: The Old Kingdom
 	CRYPTS = 149,	-- Auchenai Crypts
 	AZN = 204,	-- Azjol-Nerub
-	BH = 328,	-- Baradin Hold
+	--BH = 328,	-- Baradin Hold
 	BT = 196,	-- Black Temple
 	BFD = 10,   -- Blackfathom Deeps
-	BRC = 303,	-- Blackrock Caverns
+	--BRC = 303,	-- Blackrock Caverns
 	
 	-- These get put into "BRD"
 	NULL = 30,  -- Blackrock Depths - Detention Block
 	NULL = 276,	-- Blackrock Depths - Upper City
 	
-	BWD = 313,	-- Blackwing Descent
+	--BWD = 313,	-- Blackwing Descent
 	BWL = 50,   -- Blackwing Lair
 	BF = 137,	-- Blood Furnace
 	DM = 6,     -- Deadmines
@@ -84,14 +85,14 @@ local LFGDungeonIDs = {
 	-- DS = 447,	-- Dragon Soul
 	DTK = 214,	-- Drak'Tharon Keep
 	-- END_TIME = 435,	-- End Time
-	NULL = 417,	-- Fall of Deathwing (LFR)
-	FL = 361,	-- Firelands
+	--NULL = 417,	-- Fall of Deathwing (LFR)
+	--FL = 361,	-- Firelands
 	GNO = 14,   -- Gnomeregan
-	GB = 304,	-- Grim Batol
+	--GB = 304,	-- Grim Batol
 	GL = 177,	-- Gruul's Lair
 	GD = 216,	-- Gundrak
 	HOL = 207,	-- Halls of Lightning
-	HOO = 305,	-- Halls of Origination
+	--HOO = 305,	-- Halls of Origination
 	HOR = 255,	-- Halls of Reflection
 	HOS = 208,	-- Halls of Stone
 	RAMPS = 136,-- Hellfire Ramparts
@@ -144,7 +145,7 @@ local LFGDungeonIDs = {
 	ST = 28,    -- Sunken Temple
 	EYE = 193,	-- Tempest Keep (The Eye)
 	ARC = 174,	-- The Arcatraz
-	BOT2 = 315,	-- The Bastion of Twilight
+	--BOT2 = 315,	-- The Bastion of Twilight
 	BOT = 173,	-- The Botanica
 	COS = 209,	-- The Culling of Stratholme
 	OHB = 170,	-- The Escape From Durnholde (Old Hillsbrad Foothills)
@@ -154,13 +155,13 @@ local LFGDungeonIDs = {
 	NEX = 225,	-- The Nexus
 	OS = 224,	-- The Obsidian Sanctum
 	OCC = 206,	-- The Oculus
-	NULL = 416,	-- The Siege of Wyrmrest Temple (LFR)
+	--NULL = 416,	-- The Siege of Wyrmrest Temple (LFR)
 	SV = 147,	-- The Steamvault
-	TSC = 307,	-- The Stonecore
+	--TSC = 307,	-- The Stonecore
 	SWP = 199,	-- The Sunwell
-	VP = 311,	-- The Vortex Pinnacle
-	TOFW = 317,	-- Throne of the Four Winds
-	TOTT = 302,	-- Throne of the Tides
+	--VP = 311,	-- The Vortex Pinnacle
+	--TOFW = 317,	-- Throne of the Four Winds
+	--TOTT = 302,	-- Throne of the Tides
 	CHAMP = 245,-- Trial of the Champion
 	TOTC = {
 		246,	-- Trial of the Crusader
@@ -169,13 +170,13 @@ local LFGDungeonIDs = {
 	ULD = 22,   -- Uldaman
 	ULDAR = 243,-- Ulduar
 	UB = 146,	-- Underbog
-	UBRS = 330,	-- Upper Blackrock Spire
+	--UBRS = 330,	-- Upper Blackrock Spire
 	UK = 202,	-- Utgarde Keep
 	UP = 203,	-- Utgarde Pinnacle
 	VOA = 239,	-- Vault of Archavon
 	VH = 220,	-- Violet Hold
 	WC = 1,     -- Wailing Caverns
-	NULL = 437,	-- Well of Eternity
+	--NULL = 437,	-- Well of Eternity
 	ZA = 340,	-- Zul'Aman
 	ZF = 24,    -- Zul'Farrak
 	ZG = 334,	-- Zul'Gurub 
@@ -192,12 +193,6 @@ local LFGDungeonIDs = {
 	-- WATER_PORTAL = 298,	-- Kai'ju Gahz'rilla
 	-- AIR_PORTAL = 299,	-- Prince Sarsarun
 }
-
--- hack: add cata versions of sfk and deadmines at max level
-if isCataLevel then
-	LFGDungeonIDs.DM = 326
-	LFGDungeonIDs.SFK = 327
-end
 
 local dungeonIDToKey = {}
 for key, dungeonID in pairs(LFGDungeonIDs) do
@@ -247,10 +242,10 @@ local ActivityIDs = {
 local spoofBattleground = function(name, minLevel, maxLevel, typeID, expansionID)
 	return {
 		name = name,
-		minLevel = minLevel or cataMaxLevel,
-		maxLevel = maxLevel or cataMaxLevel,
+		minLevel = minLevel or wrathMaxLevel,
+		maxLevel = maxLevel or wrathMaxLevel,
 		typeID = typeID or DungeonType.Battleground,
-		expansionID = expansionID or Expansions.Cataclysm,
+		expansionID = expansionID or Expansions.Wrath,
 	}
 end	
 local activityIDToKey = {}
@@ -268,11 +263,11 @@ end
 -- https://wago.tools/db2/GroupFinderActivityGrp?build=4.4.0.54525
 local groupIDAdditionalInfo = {
 	[285] = { -- Classic Dungeons
-		expansionID = Expansions.Classic, 
+		expansionID = Expansions.Classic,
 		typeID = DungeonType.Dungeon,
 	},
 	[290] = { -- Classic Raids
-		expansionID = Expansions.Classic, 
+		expansionID = Expansions.Classic,
 		typeID = DungeonType.Raid,
 	},
 	[286] = { -- Burning Crusade Dungeons
@@ -280,7 +275,7 @@ local groupIDAdditionalInfo = {
 		typeID = DungeonType.Dungeon,
 	},
 	[291] = { -- Burning Crusade Raids
-		expansionID = Expansions.BurningCrusade, 
+		expansionID = Expansions.BurningCrusade,
 		typeID = DungeonType.Raid,
 	}, 
 	[287] = { -- Lich King Dungeons
@@ -288,18 +283,12 @@ local groupIDAdditionalInfo = {
 		typeID = DungeonType.Dungeon,
 	},
 	[292] = {-- Lich King Raids
-		expansionID = Expansions.Wrath, 
+		expansionID = Expansions.Wrath,
 		typeID = DungeonType.Raid,
 	},
-
-	-- note: no Cataclysm Dungeons entry in the db table
-	[364] = { -- Cataclysm Raids
-		expansionID = Expansions.Cataclysm,
-		typeID = DungeonType.Raid,
-	}, 
 	-- Arena & Battlegrounds (map to latest expansion)
 	[299] = {
-		expansionID = Expansions.Cataclysm,
+		expansionID = Expansions.Wrath,
 		typeID = DungeonType.Battleground,
 	}
 }
@@ -328,23 +317,23 @@ local infoOverrides = {
 	-- take the min level from the first wing and max level from the second wing.
 	-- the ActivityInfo api also doesnt supply the dungeon type so we'll just hardcode it here.
 	SM2 = { 
-		name = GetRealZoneText(189), 
+		name = GetRealZoneText(189),
 		minLevel = 26, maxLevel = 45,
 		expansionID = Expansions.Classic,
-		typeID = DungeonType.Dungeon 
+		typeID = DungeonType.Dungeon
 	},
 	BRD = { minLevel = 49, maxLevel = 61 },
 	STR = { minLevel = 42, maxLevel = 56},
 	MAR = { 
-		name = GetRealZoneText(349), 
-		minLevel = 32, maxLevel = 44, 
-		typeID = DungeonType.Dungeon, 
+		name = GetRealZoneText(349),
+		minLevel = 32, maxLevel = 44,
+		typeID = DungeonType.Dungeon,
 	},
 	DM2 = { 
-		name = GetRealZoneText(429), 
+		name = GetRealZoneText(429),
 		minLevel = 36, maxLevel = 52,
 		expansionID = Expansions.Classic,
-		typeID = DungeonType.Dungeon 
+		typeID = DungeonType.Dungeon
 	},
 	-- DME = { minLevel = 36, maxLevel = 46 },
 	-- DMW = { minLevel = 39, maxLevel = 49 },
@@ -352,36 +341,27 @@ local infoOverrides = {
 	-- The pvp dungeons arent in th LFGDungeons table in the cata client atm. (except for RBG)
 	-- and the GetActivityInfoTable API is returning `0` for min/max level so we'll just hardcode it here.
 	ARENA = { 
-		minLevel = cataMaxLevel, maxLevel = cataMaxLevel,
+		minLevel = wrathMaxLevel, maxLevel = wrathMaxLevel,
 		name = C_LFGList.GetActivityGroupInfo(299), -- this is the only localized reference to "Arenas" i could find
 	}, 
-	WSG = { minLevel = 10, maxLevel = cataMaxLevel },
-	AB = { minLevel = 10, maxLevel = cataMaxLevel },
-	EOTS = { minLevel = 35, maxLevel = cataMaxLevel },
-	AV = { minLevel = 45, maxLevel = cataMaxLevel },
-	SOTA = { minLevel = 65, maxLevel = cataMaxLevel },
-	WG = { minLevel = 71, maxLevel = cataMaxLevel },
+	WSG = { minLevel = 10, maxLevel = wrathMaxLevel },
+	AB = { minLevel = 10, maxLevel = wrathMaxLevel },
+	EOTS = { minLevel = 35, maxLevel = wrathMaxLevel },
+	AV = { minLevel = 45, maxLevel = wrathMaxLevel },
+	SOTA = { minLevel = 65, maxLevel = wrathMaxLevel },
+	WG = { minLevel = 71, maxLevel = wrathMaxLevel },
 	RBG = { typeID = DungeonType.Battleground }, -- GetLFGDungeonInfo considers it a raid for some reason.
-	IOC = { minLevel = 71, maxLevel = cataMaxLevel },
+	IOC = { minLevel = 71, maxLevel = wrathMaxLevel },
 	-- Completely spoofed entries, missing in both LFGDungeons and GroupFinderActivity
 	TB = spoofBattleground(GetRealZoneText(732)),
 	TP = spoofBattleground(GetRealZoneText(726)),
 	BFG = spoofBattleground(GetRealZoneText(761)),
-	-- DM and SFK only "Heroic" @ max level
-	DM = isCataLevel and {
-		name = DUNGEON_NAME_WITH_DIFFICULTY:format(
-			DUNGEON_FLOOR_THEDEADMINES1, DUNGEON_DIFFICULTY2)
-	} or nil,
-	SFK = isCataLevel and { 
-		name = DUNGEON_NAME_WITH_DIFFICULTY:format(
-			GetRealZoneText(33), DUNGEON_DIFFICULTY2)
-	} or nil,
 	-- Consider Holiday dungeons as part of latest expansion (like bgs)
 	-- Related issue: 253
-	BREW = { expansionID = Expansions.Cataclysm },
-	LOVE = { expansionID = Expansions.Cataclysm },
-	SUMMER = { expansionID = Expansions.Cataclysm },
-	HOLLOW = { expansionID = Expansions.Cataclysm },
+	BREW = { expansionID = Expansions.Wrath },
+	LOVE = { expansionID = Expansions.Wrath },
+	SUMMER = { expansionID = Expansions.Wrath },
+	HOLLOW = { expansionID = Expansions.Wrath },
 }
 
 ---@type {[DungeonID]: DungeonInfo}
