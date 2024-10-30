@@ -8,6 +8,7 @@ Addon.Tool = Tool
 
 Tool.IconClassTexture="Interface\\GLUES\\CHARACTERCREATE\\UI-CHARACTERCREATE-CLASSES"
 Tool.IconClassTextureWithoutBorder="Interface\\WorldStateFrame\\ICONS-CLASSES"
+print("l3")
 
 ---@param classFile string
 ---@param size number?

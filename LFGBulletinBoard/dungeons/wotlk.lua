@@ -1,8 +1,10 @@
+print("0")
 ---@diagnostic disable: duplicate-set-field
 local tocName, 
     ---@class Addon_DungeonData : Addon_LibGPIOptions
     addon = ...;
 --check if we are on wrath client
+print("1")
 if GetBuildInfo() ~= "3.3.5" then return end
 assert(GetLFGDungeonInfo, tocName .. " requires the API `GetLFGDungeonInfo` for parsing dungeon info")
 assert(GetRealZoneText, tocName .. " requires the API `GetRealZoneText` for parsing dungeon info")
@@ -12,13 +14,14 @@ local debug = true
 local print = function(...) if debug then addon.print(...) end end
 
 -- initialize here for now, this should be moved to a file thats always grunted to load first.
-addon.Enum = addon.Enum or {} 
+addon.Enum = addon.Enum or {}
 local Expansions = {
 	Classic = 0,
 	BurningCrusade = 1,
 	Wrath = 2,
 	Cataclysm = 3,
 }
+print("2")
 
 local DungeonType = {
 	Dungeon = 1,
@@ -53,6 +56,7 @@ local isHolidayActive = function(key)
 	return active
 end
 
+print("3")
 -- The keys to this table need to be manually matched to the appropriate dungeonID
 -- These same keys are used for identifying the preset tags/keywords for each dungeon. 
 -- If a tag's Key is missing from here or the ActivityIDs table, the tags will not be registered.
