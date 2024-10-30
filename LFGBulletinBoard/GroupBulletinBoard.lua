@@ -43,7 +43,9 @@ GBB.COMBINEMSGTIMER=10
 GBB.MAXCOMPACTWIDTH=350
 GBB.ShouldReset = false
 
-local isClassicEra = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+local isWrath = GetBuildInfo() == "3.3.5"
+local isCata = GetBuildInfo() == "4.3.4"
+
 -- Tools
 -------------------------------------------------------------------------------------
 local debug = false -- dev override
@@ -509,10 +511,10 @@ local function hooked_createTooltip(self)
 			local inInstance, instanceType = IsInInstance()
 		
 			if instanceType=="none" then
-				local entry=GBB.GroupTrans[name] 
+				local entry=GBB.GroupTrans[name]
 				
-				self:AddLine(" ")					
-				self:AddLine(GBB.L.msgLastSeen)					
+				self:AddLine(" ")
+				self:AddLine(GBB.L.msgLastSeen)
 				if entry.dungeon then
 					self:AddLine(entry.dungeon)
 				end
@@ -520,7 +522,7 @@ local function hooked_createTooltip(self)
 					self:AddLine(entry.Note)
 				end
 				self:AddLine(SecondsToTime(GetServerTime()-entry.lastSeen))
-				self:Show()	
+				self:Show()
 			end
 		end
 	end
@@ -599,7 +601,7 @@ function GBB.Init()
 	GBB.InitializeCustomFilters();
 	
 	-- Get localize and Dungeon-Information
-	GBB.L = GBB.LocalizationInit()	
+	GBB.L = GBB.LocalizationInit()
 	GBB.dungeonNames = GBB.GetDungeonNames()
 	-- Add custom categories to `dungeonNames`
 	MergeTable(GBB.dungeonNames, GBB.GetCustomFilterNames());
@@ -627,7 +629,7 @@ function GBB.Init()
 	GBB.MAXTIME=time() +60*60*24*365 --add a year!
 	
 	GBB.ClearNeeded=true
-	GBB.ClearTimer=GBB.MAXTIME	
+	GBB.ClearTimer=GBB.MAXTIME
 	
 	GBB.LFG_Timer=time()+GBB.LFG_UPDATETIME
 	GBB.LFG_Successfulljoined=false
@@ -774,7 +776,7 @@ function GBB.Init()
 	GBB.PopupDynamic=GBB.Tool.CreatePopup(GBB.OptionsUpdate)
 	GBB.InitGroupList()
 
-	if isClassicEra then
+	if isWrath then
 		GBB.Tool.AddTab(GroupBulletinBoardFrame, GBB.L.TabRequest, GroupBulletinBoardFrame_ScrollFrame);
 		
 		-- GBB.Tool.AddTab(GroupBulletinBoardFrame, GBB.L.TabGroup, GroupBulletinBoardFrame_GroupFrame);
@@ -802,7 +804,7 @@ function GBB.Init()
 		else -- note: only the request-list tab is currently active on cata & era.
 			GBB.Tool.SelectTab(GroupBulletinBoardFrame, 1)
 			-- hide the "Remember past group members" aka "EnableGroup" tab should be the last tab
-			GBB.Tool.TabHide(GroupBulletinBoardFrame, isClassicEra and 2 or 3)
+			GBB.Tool.TabHide(GroupBulletinBoardFrame, 3)
 		end
 	end
 	enableGroupVar:AddUpdateHook(refreshGroupTab)
