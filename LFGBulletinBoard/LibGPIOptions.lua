@@ -1,3 +1,4 @@
+print("LibGPIOptions starting")
 local TOCNAME,---@type string
 	---@class Addon_LibGPIOptions	
 	Addon = ...;
@@ -760,3 +761,5 @@ function Options.OpenCategoryPanel(panelID)
 	Settings.OpenToCategory(Options.CategoryPanels[panelID or 1].name)
 end
 
+
+print("LibGPIOptions done")

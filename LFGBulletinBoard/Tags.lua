@@ -1,3 +1,4 @@
+print("Tags starting")
 local TOCNAME, 
 	---@class Addon_Tags: Addon_Dungeons
 	GBB = ...;
@@ -1101,3 +1102,5 @@ for locale, dungeonTags in pairs(GBB.dungeonTagsLoc) do
 		end
 	end
 end
+
+print("Tags done")

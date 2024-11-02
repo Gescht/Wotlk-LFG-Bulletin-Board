@@ -1,3 +1,4 @@
+print("Chat starting")
 local TOCNAME,GBB=...
 
 function GBB.CreateChatFrame(name, ...)
@@ -166,3 +167,4 @@ function GBB.CreateChannelPulldown (frame, level, menuList)
 		UIDropDownMenu_AddButton(info)
 	end
 end
+print("Chat done")

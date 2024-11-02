@@ -1,3 +1,4 @@
+print("LibGPIToolBox starting")
 local TOCNAME,
 	---@class Addon_Tool	
 	Addon = ...;
@@ -775,3 +776,4 @@ function Tool.InDateRange(startDate, endDate)
 		return false
 	end
 end
+print("LibGPIToolBox done")

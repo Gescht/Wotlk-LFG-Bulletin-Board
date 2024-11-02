@@ -1,3 +1,4 @@
+print("LfgToolList starting")
 
 local 	TOCNAME,GBB=...
 
@@ -727,3 +728,5 @@ end
 function GBB.LfgRequestHideTooltip(self)
 	GameTooltip:Hide()
 end
+
+print("LfgToolList done")

@@ -1,3 +1,4 @@
+print("Options starting")
 local TOCNAME,
 	---@class Addon_Options : Addon_Localization, Addon_CustomFilters, Addon_Dungeons, Addon_Tags, Addon_LibGPIOptions, Addon_LibMinimapButton
 	GBB= ...;
@@ -564,3 +565,4 @@ function GBB.GetNumActiveFilters()
 	end
 	return count;
 end
+print("Options done")

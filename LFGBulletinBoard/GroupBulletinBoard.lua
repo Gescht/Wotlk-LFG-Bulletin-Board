@@ -1,3 +1,4 @@
+print("GroupBulletinBoard starting")
 local TOCNAME,
 	---@class Addon_GroupBulletinBoard : Addon_Localization, Addon_CustomFilters, Addon_Dungeons, Addon_Tags, Addon_Options, Addon_Tool
 	GBB = ...;
@@ -985,3 +986,5 @@ function GBB.OnUpdate(elapsed)
 	end
 end
 
+
+print("GroupBulletinBoard done")

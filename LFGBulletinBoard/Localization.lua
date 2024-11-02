@@ -1,3 +1,4 @@
+print("Localization starting")
 local TOCNAME,
 	---@class Addon_LocalizationdungeonSecondTags
 	GBB=...;
@@ -864,3 +865,4 @@ function GBB.LocalizationInit()
 	end
 	return localizedStrings
 end
+print("Localization done")

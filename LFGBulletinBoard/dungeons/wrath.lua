@@ -1,18 +1,21 @@
-print("0")
+print("wrath starting")
+
 ---@diagnostic disable: duplicate-set-field
 local tocName, 
     ---@class Addon_DungeonData : Addon_LibGPIOptions
     addon = ...;
+
+print("wrath -9")
 --check if we are on wrath client
-print("1")
 if GetBuildInfo() ~= "3.3.5" then return end
 assert(GetLFGDungeonInfo, tocName .. " requires the API `GetLFGDungeonInfo` for parsing dungeon info")
 assert(GetRealZoneText, tocName .. " requires the API `GetRealZoneText` for parsing dungeon info")
-assert(C_LFGList.GetActivityInfoTable, tocName .. " requires the API `C_LFGList.GetActivityInfoTable` for parsing dungeon info")
 
-local debug = true
-local print = function(...) if debug then addon.print(...) end end
+print("wrath -8")
+local debug = false
+--local print = function(...) if debug then addon.print(...) end end
 
+print("wrath -7")
 -- initialize here for now, this should be moved to a file thats always grunted to load first.
 addon.Enum = addon.Enum or {}
 local Expansions = {
@@ -21,8 +24,8 @@ local Expansions = {
 	Wrath = 2,
 	Cataclysm = 3,
 }
-print("2")
 
+print("wrath -6")
 local DungeonType = {
 	Dungeon = 1,
 	Raid = 2,
@@ -33,6 +36,7 @@ local DungeonType = {
 	-- thinking of using 8 for "Rated" for rbgs and arenas to be sorted after normal bgs. 
 }
 
+print("wrath -5")
 local wrathMaxLevel = 80
 --could be used for swp and bt timewalking
 local isWrathLevel = UnitLevel("player") >= (wrathMaxLevel - 2) -- when to show Heroic DM & SFK as part of cata.
@@ -56,7 +60,7 @@ local isHolidayActive = function(key)
 	return active
 end
 
-print("3")
+print("wrath -4")
 -- The keys to this table need to be manually matched to the appropriate dungeonID
 -- These same keys are used for identifying the preset tags/keywords for each dungeon. 
 -- If a tag's Key is missing from here or the ActivityIDs table, the tags will not be registered.
@@ -104,7 +108,7 @@ local LFGDungeonIDs = {
 	HYJAL = 195,-- Hyjal Past
 	ICC = 279,	-- Icecrown Citadel
 	KARA = 175,	-- Karazhan
-	TOLVIR = 312,	-- Lost City of the Tol'vir
+	--TOLVIR = 312,	-- Lost City of the Tol'vir
 	LBRS = 32,  -- Lower Blackrock Spire
 	MGT = 198,	-- Magisters' Terrace
 	MAG = 176,	-- Magtheridon's Lair
@@ -181,9 +185,9 @@ local LFGDungeonIDs = {
 	VH = 220,	-- Violet Hold
 	WC = 1,     -- Wailing Caverns
 	--NULL = 437,	-- Well of Eternity
-	ZA = 340,	-- Zul'Aman
+	ZA = 197,	-- Zul'Aman
 	ZF = 24,    -- Zul'Farrak
-	ZG = 334,	-- Zul'Gurub 
+	ZG = 42,	-- Zul'Gurub 
 
 	-- Seasonal
 	BREW = 287,	-- Coren Direbrew (Brewfest)
@@ -228,9 +232,9 @@ local ActivityIDs = {
 	WSG = 919,	-- Warsong Gulch
 	WG = 1117, 	-- Wintergrasp
 	IOC = 1144, -- Isle of Conquest 
-	TB = 939, 	-- Battle for Tol Barad (Spoofed in infoOverrides)
+	--[[TB = 939, 	-- Battle for Tol Barad (Spoofed in infoOverrides)
 	TP = 940, 	-- Twin Peaks missing (Spoofed)
-	BFG = 941, 	-- Battle for Gilneas missing (Spoofed)
+	BFG = 941, 	-- Battle for Gilneas missing (Spoofed)]]
 	-- BM = 831,	-- The Black Morass (only used in overrides)
     -- MARA = 809,	-- Maraudon (now split into 3 wings)
 	-- STK = 802,	-- Stormwind Stockades (Use "Stormwind Stockade")
@@ -263,6 +267,7 @@ for key, activityID in pairs(ActivityIDs) do
     end
 end
 
+print("wrath -3")
 -- C_LFGList.GetActivityInfoTable doesnt have expansionID so we need to set it based on activityGroupID
 -- https://wago.tools/db2/GroupFinderActivityGrp?build=4.4.0.54525
 local groupIDAdditionalInfo = {
@@ -311,6 +316,7 @@ do -- map IDs to ones that share expansion and type data
 	end
 end
 
+print("wrath -2")
 -- For any data that isnt available in either api, we can manually override it here.
 -- Either manually hardcoded or by using a different api to get the data.
 -- key by dungeonKey, `nil`/missing info entries will be ignored.
@@ -346,7 +352,8 @@ local infoOverrides = {
 	-- and the GetActivityInfoTable API is returning `0` for min/max level so we'll just hardcode it here.
 	ARENA = { 
 		minLevel = wrathMaxLevel, maxLevel = wrathMaxLevel,
-		name = C_LFGList.GetActivityGroupInfo(299), -- this is the only localized reference to "Arenas" i could find
+		--name = C_LFGList.GetActivityGroupInfo(299), -- this is the only localized reference to "Arenas" i could find
+		name = "Arena", -- this is the only localized reference to "Arenas" i could find
 	}, 
 	WSG = { minLevel = 10, maxLevel = wrathMaxLevel },
 	AB = { minLevel = 10, maxLevel = wrathMaxLevel },
@@ -368,6 +375,107 @@ local infoOverrides = {
 	HOLLOW = { expansionID = Expansions.Wrath },
 }
 
+print("wrath -1")
+local manualActivityInfo = {
+	[936]  = {    -- 2v2 Arena
+		name = "2v2 Arena",
+		minLevel = 80,
+		maxLevel = 80,
+		expansionID = 2,
+		typeID = 7,
+		tagKey = activityIDToKey[936],
+	},
+	[937]  = {    -- 3v3 Arena
+		name = "3v3 Arena",
+		minLevel = 80,
+		maxLevel = 80,
+		expansionID = 2,
+		typeID = 7,
+		tagKey = activityIDToKey[937],
+	},
+	[938]  = {     -- 5v5 Arena
+		name = "5v5 Arena",
+		minLevel = 80,
+		maxLevel = 80,
+		expansionID = 2,
+		typeID = 7,
+		tagKey = activityIDToKey[938],
+	},
+	[932]  = {	-- Alterac Valley
+		name = "Alterac Valley",
+		minLevel = 51,
+		maxLevel = 80,
+		expansionID = 0,
+		typeID = 7,
+		tagKey = activityIDToKey[932],
+	},
+	[926]  = {	-- Arathi Basin 
+		name = "Arathi Basin",
+		minLevel = 20,
+		maxLevel = 80,
+		expansionID = 0,
+		typeID = 7,
+		tagKey = activityIDToKey[926],
+	},
+	[811]  = {	-- Blackrock Depths 
+		name = "Blackrock Depths",
+		minLevel = 40,
+		maxLevel = 60,
+		expansionID = 0,
+		typeID = 1,
+		tagKey = activityIDToKey[811],
+	},
+	[934]  = {	-- Eye of the Storm 
+		name = "Eye of the Storm",
+		minLevel = 61,
+		maxLevel = 80,
+		expansionID = 1,
+		typeID = 7,
+		tagKey = activityIDToKey[934],
+	},
+	[1142] = {    -- Strand of the Ancients 
+		name = "Strand of the Ancients",
+		minLevel = 71,
+		maxLevel = 80,
+		expansionID = 2,
+		typeID = 7,
+		tagKey = activityIDToKey[1142],
+	},
+	[816]  = {	-- Stratholme 
+		name = "Stratholme",
+		minLevel = 56,
+		maxLevel = 61,
+		expansionID = 0,
+		typeID = 1,
+		tagKey = activityIDToKey[816],
+	},
+	[919]  = {	-- Warsong Gulch 
+		name = "Warsong Gulch",
+		minLevel = 10,
+		maxLevel = 80,
+		expansionID = 0,
+		typeID = 7,
+		tagKey = activityIDToKey[919],
+	},
+	[1117] = { 	-- Wintergrasp 
+		name = "Wintergrasp",
+		minLevel = 77,
+		maxLevel = 80,
+		expansionID = 2,
+		typeID = 7,
+		tagKey = activityIDToKey[1117],
+	},
+	[1144] = {    -- Isle of Conquest 
+		name = "Isle of Conquest",
+		minLevel = 71,
+		maxLevel = 80,
+		expansionID = 2,
+		typeID = 7,
+		tagKey = activityIDToKey[1144],
+	},
+}
+
+print("wrath 0")
 ---@type {[DungeonID]: DungeonInfo}
 local dungeonInfoCache = {}
 local infoByTagKey = {}
@@ -375,25 +483,18 @@ local numDungeons = 0
 do
     local function cacheActivityInfo(activityID)
         local cached = {}
-        local activityInfo = C_LFGList.GetActivityInfoTable(activityID)
+        local activityInfo = manualActivityInfo[activityID]
 		if activityInfo then -- spoofied entries will be nil
-			local additionalInfo = groupIDAdditionalInfo[activityInfo.groupFinderActivityGroupID]
 			cached = {
-				name = activityInfo.shortName or activityInfo.fullName,
+				name = activityInfo.name,
 				minLevel = activityInfo.minLevel,
 				maxLevel = activityInfo.maxLevel,
-				expansionID = additionalInfo.expansionID,
-				typeID = additionalInfo.typeID,
-				tagKey = activityIDToKey[activityID]
+				expansionID = activityInfo.expansionID,
+				typeID = activityInfo.typeID,
+				tagKey = activityInfo.tagKey
 			}
 		else cached.tagKey = activityIDToKey[activityID] end
 
-		local overrides = infoOverrides[cached.tagKey]
-		if overrides then
-			for key, value in pairs(overrides) do
-				cached[key] = value
-			end
-		end
 		-- this is is here verify no overlap in ID's between LFGDungeonIDs and ActivityIDs
         assert(not dungeonInfoCache[activityID], "Duplicate ID found for activity ID: " .. activityID, "Use a different dungeonID for this dungeon or different activityID", activityInfo)
 
@@ -406,6 +507,7 @@ do
 		infoByTagKey[cached.tagKey] = cached
         numDungeons = numDungeons + 1
     end
+	print("wrath 1")
     local function cacheLFGDungeonInfo(dungeonID)
         local cached = {}
 		-- https://warcraft.wiki.gg/wiki/API_GetLFGDungeonInfo
@@ -442,6 +544,7 @@ do
 		numDungeons = numDungeons + 1
         -- print(_ .. ": Skipping dunegeon " .. info.name .. " dungeonID: " .. dungeonID .. " typeID: " .. info.typeID)
     end
+	print("wrath 2")
     for dungeonKey in pairs(LFGDungeonIDs) do
         local dungeonID = LFGDungeonIDs[dungeonKey]
         if type(dungeonID) == "table" then
@@ -452,6 +555,7 @@ do
             cacheLFGDungeonInfo(dungeonID)
         end
     end
+	print("wrath 3")
     for activityKey in pairs(ActivityIDs) do
         local activityID = ActivityIDs[activityKey]
         if type(activityID) == "table" then
@@ -462,6 +566,7 @@ do
             cacheActivityInfo(activityID)
         end
     end
+	print("wrath 4")
 end
 
 ---@param dungeonKey string
@@ -520,6 +625,7 @@ function addon.GetSortedDungeonKeys(expansionID, typeID)
 	return keys
 end
 
+print("wrath 5")
 ---Optionally filter by expansionID and/or typeID
 ---@param expansionID ExpansionID?
 ---@param typeID DungeonTypeID?
@@ -540,3 +646,4 @@ end
 addon.cataRawDungeonInfo = dungeonInfoCache
 addon.Enum.Expansions = Expansions
 addon.Enum.DungeonType = DungeonType
+print("wrath done")

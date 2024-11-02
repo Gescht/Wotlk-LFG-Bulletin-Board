@@ -1,3 +1,4 @@
+print("Dungeons starting")
 local TOCNAME,
 	---@class Addon_Dungeons : Addon_DungeonData	
 	GBB = ...;
@@ -788,3 +789,5 @@ GBB.dungeonLevel = mergeTables(
 
 -- needed because Option.lua hardcodes a checkbox for "DEADMINES"
 GBB.dungeonLevel["DEADMINES"] = GBB.dungeonLevel["DM"]
+
+print("Dungeons done")

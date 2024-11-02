@@ -1,3 +1,4 @@
+print("LibGPIMinimapButton starting")
 ---@type string
 local TOCNAME,
 	---@class Addon_LibMinimapButton: Addon_LibGPIOptions
@@ -262,3 +263,5 @@ end
 function MinimapButton.SetTooltip(Text)
 	MinimapButton.Tooltip=Text
 end
+
+print("LibGPIMinimapButton done")

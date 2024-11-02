@@ -1,3 +1,4 @@
+print("GroupList starting")
 local 	TOCNAME,GBB=...
 
 local MAXGROUP=500
@@ -254,3 +255,5 @@ function GBB.ScrollGroupList(self,delta)
 	self:SetScrollOffset(self:GetScrollOffset() + delta*5);
 	self:ResetAllFadeTimes()
 end
+
+print("GroupList done")

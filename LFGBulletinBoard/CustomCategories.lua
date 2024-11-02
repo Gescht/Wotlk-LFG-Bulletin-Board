@@ -1,3 +1,4 @@
+print("CustomCategories starting")
 local TOCNAME,
     ---@class Addon_CustomFilters: Addon_LibGPIOptions
     Addon = ...;
@@ -730,3 +731,5 @@ function Addon.UpdateAdditionalFiltersPanel(scrollPanel)
     FilterSettingsPool:PresetsButton(scrollPanel):SetPoint("LEFT", createBtn, "RIGHT", 10, 0)
     scrollPanel.UpdateScrollLayout(); -- update container scroll layout incase any entries deleted/created
 end
+
+print("CustomCategories done")

@@ -1,3 +1,4 @@
+print("RequestList starting")
 local TOCNAME,
 	---@class Addon_RequestList : Addon_Tags
 	---@field FramesEntries (RequestHeader|RequestEntry)[]
@@ -1113,3 +1114,5 @@ end
 function GBB.RequestHideTooltip(self)
 	GameTooltip:Hide()
 end
+
+print("RequestList done")
