@@ -33,3 +33,56 @@ Slash Commands
 
  `/gbb` - open main window
 
+todo
+
+making it load to the end
+    --LibGPIOptions.lua
+    --LibGPIMinimapButton.lua
+    --LibGPIToolBox.lua
+    --Chat.lua
+    --Localization.lua
+    --dungeons\wrath.lua
+    --CustomCategories.lua
+    Dungeons.lua
+    Tags.lua
+    RequestList.lua
+    Options.lua
+    GroupList.Lua
+    GroupBulletinBoard.lua
+    LfgToolList.lua
+    GroupBulletinBoard.xml
+
+
+initial check
+    LibGPIOptions.lua
+    LibGPIMinimapButton.lua
+    LibGPIToolBox.lua
+    Chat.lua
+    Localization.lua
+    --dungeons\wrath.lua
+    CustomCategories.lua
+    Dungeons.lua
+    Tags.lua
+    RequestList.lua
+    Options.lua
+    GroupList.Lua
+    GroupBulletinBoard.lua
+    LfgToolList.lua
+    GroupBulletinBoard.xml
+
+double check 
+    LibGPIOptions.lua
+    LibGPIMinimapButton.lua
+    LibGPIToolBox.lua
+    Chat.lua
+    Localization.lua
+    dungeons\wrath.lua
+    CustomCategories.lua
+    Dungeons.lua
+    Tags.lua
+    RequestList.lua
+    Options.lua
+    GroupList.Lua
+    GroupBulletinBoard.lua
+    LfgToolList.lua
+    GroupBulletinBoard.xml
