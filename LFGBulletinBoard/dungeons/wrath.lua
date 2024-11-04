@@ -22,7 +22,6 @@ local Expansions = {
 	Classic = 0,
 	BurningCrusade = 1,
 	Wrath = 2,
-	Cataclysm = 3,
 }
 
 print("wrath -6")
@@ -643,7 +642,7 @@ function addon.GetDungeonLevelRanges(expansionID, typeID)
 	return ranges
 end
 
-addon.cataRawDungeonInfo = dungeonInfoCache
+addon.wrathRawDungeonInfo = dungeonInfoCache
 addon.Enum.Expansions = Expansions
 addon.Enum.DungeonType = DungeonType
 print("wrath done")
