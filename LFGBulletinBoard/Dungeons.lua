@@ -633,6 +633,12 @@ end
 -- local/private heplers and data
 ----------------------------------------------
 
+function MergeTable(destination, source)
+	for k, v in pairs(source) do
+		destination[k] = v;
+	end
+end
+
 --- the `Union` function is included in sharexml's TableUtils.lua already as `MergeTable`
 -- note: blizz's `MergeTable` **doesnt** return reference to the resulting table
 local function mergeTables(...)
@@ -640,7 +646,7 @@ local function mergeTables(...)
 	for i = 1, select("#", ...) do
 		local nextTbl = select(i, ...)
 		assert(type(nextTbl) == "table", "All arguments to `mergeTables` must be tables.")
-		MergeTable(resulting, nextTbl) 
+		MergeTable(resulting, nextTbl)
 	end
 	return resulting
 end
