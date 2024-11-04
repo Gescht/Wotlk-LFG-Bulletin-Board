@@ -5,24 +5,13 @@ local TOCNAME,
 local ChannelIDs
 
 local isWrath = GetBuildInfo() == "3.3.5"
-local isCata = GetBuildInfo() == "4.3.4"
-local isClassicEra = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+local project_expansion_id = 3
 
-local PROJECT_EXPANSION_ID = {
-	[WOW_PROJECT_CLASSIC] = GBB.Enum.Expansions.Classic,
-	[WOW_PROJECT_BURNING_CRUSADE_CLASSIC] = GBB.Enum.Expansions.BurningCrusade,
-	[WOW_PROJECT_WRATH_CLASSIC] = GBB.Enum.Expansions.Wrath,
-	-- note: global not defined in classic era client
-	[WOW_PROJECT_CATACLYSM_CLASSIC or 0] = GBB.Enum.Expansions.Cataclysm,
-}
-local EXPANSION_PROJECT_ID = tInvert(PROJECT_EXPANSION_ID)
 ---hack to remove "World of Warcraft: " from classic on esES/esMX clients
-local EXPANSION_NAME0 = EXPANSION_NAME0:gsub("World of Warcraft: ", "")
 local EXPANSION_FILTER_NAME = {
-	[GBB.Enum.Expansions.Classic] = SUBTITLE_FORMAT:format(FILTERS, EXPANSION_NAME0),
-	[GBB.Enum.Expansions.BurningCrusade] = SUBTITLE_FORMAT:format(FILTERS, EXPANSION_NAME1),
-	[GBB.Enum.Expansions.Wrath] = SUBTITLE_FORMAT:format(FILTERS, EXPANSION_NAME2),
-	[GBB.Enum.Expansions.Cataclysm] = SUBTITLE_FORMAT:format(FILTERS, EXPANSION_NAME3),
+	[GBB.Enum.Expansions.Classic] = "Classic",
+	[GBB.Enum.Expansions.BurningCrusade] = "The Burning Crusade",
+	[GBB.Enum.Expansions.Wrath] = "Wrath of the Lich King",
 }
 
 ---@type {[number]: CheckButton[]} # Used by GetNumActiveFilters
@@ -140,7 +129,7 @@ end
 ---@param expansionID ExpansionID
 local function GenerateExpansionPanel(expansionID)
 	GBB.OptionsBuilder.AddNewCategoryPanel(EXPANSION_FILTER_NAME[expansionID], false, true)
-	local isCurrentXpac = expansionID == PROJECT_EXPANSION_ID[WOW_PROJECT_ID];
+	local isCurrentXpac = expansionID == project_expansion_id;
 	local filters = {} ---@type CheckButton[]
 	filtersByExpansionID[expansionID] = filters
 	local dungeons = GBB.GetSortedDungeonKeys(
@@ -412,14 +401,14 @@ function GBB.OptionsInit ()
 	----------------------------------------------------------
 	-- Expansion specific filters
 	----------------------------------------------------------
-	if not isClassicEra then 
+	--if not isClassicEra then 
 		--- Cata Filters
-		GenerateExpansionPanel(GBB.Enum.Expansions.Cataclysm)
+		--GenerateExpansionPanel(GBB.Enum.Expansions.Cataclysm)
 		--- Wrath Filters
 		GenerateExpansionPanel(GBB.Enum.Expansions.Wrath)
 		--- TBC Filters
 		GenerateExpansionPanel(GBB.Enum.Expansions.BurningCrusade)
-	end
+	--end
 	-- Vanilla Filters
 	GenerateExpansionPanel(GBB.Enum.Expansions.Classic)
 		
