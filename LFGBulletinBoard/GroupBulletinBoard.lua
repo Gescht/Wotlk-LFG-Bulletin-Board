@@ -562,10 +562,10 @@ function GBB.Popup_Minimap(frame,showMinimapOptions)
 end
 
 function GBB.Init()
-	GroupBulletinBoardFrame:SetResizeBounds(400,170)	
+	GroupBulletinBoardFrame:SetMinResize(400,170)
 	GroupBulletinBoardFrame:SetClampedToScreen(true)
 	GBB.UserLevel=UnitLevel("player")
-	GBB.UserName=(UnitFullName("player"))
+	GBB.UserName=(UnitName("player"))
 	GBB.ServerName=GetRealmName()
 
 	-- Initalize options
