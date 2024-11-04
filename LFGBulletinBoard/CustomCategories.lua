@@ -134,6 +134,14 @@ function Addon.GetCustomFilterKeys()
     return keys
 end
 
+function tInvert(tbl)
+	local inverted = {};
+	for k, v in pairs(tbl) do
+		inverted[v] = k;
+	end
+	return inverted;
+end
+
 ---@param tagListByLoc {[Locale]: {[string]: string[]}} expects the dungeonTagsLoc table
 function Addon.SyncCustomFilterTags(tagListByLoc)
     isInitializedOrPanic()
