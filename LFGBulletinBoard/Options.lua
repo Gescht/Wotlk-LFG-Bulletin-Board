@@ -3,8 +3,11 @@ local TOCNAME,
 	---@class Addon_Options : Addon_Localization, Addon_CustomFilters, Addon_Dungeons, Addon_Tags, Addon_LibGPIOptions, Addon_LibMinimapButton
 	GBB= ...;
 local ChannelIDs
+
+local isWrath = GetBuildInfo() == "3.3.5"
+local isCata = GetBuildInfo() == "4.3.4"
 local isClassicEra = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
-local isCataclysm = WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC
+
 local PROJECT_EXPANSION_ID = {
 	[WOW_PROJECT_CLASSIC] = GBB.Enum.Expansions.Classic,
 	[WOW_PROJECT_BURNING_CRUSADE_CLASSIC] = GBB.Enum.Expansions.BurningCrusade,
@@ -158,10 +161,11 @@ local function GenerateExpansionPanel(expansionID)
 		tinsert(filters, CheckBoxFilter(key, enabled))
 	end
 
-	-- different layout for classic era clients
+	--[[ different layout for classic era clients
 	if not isCurrentXpac or isClassicEra then
 		GBB.OptionsBuilder.SetRightSide()
-	end
+	end]]
+	GBB.OptionsBuilder.SetRightSide()
 
 	-- Raids
 	GBB.OptionsBuilder.Indent(-10)
@@ -173,9 +177,10 @@ local function GenerateExpansionPanel(expansionID)
 
 	-- Battlegrounds (bg are all consider part of latest expansion atm)
 	if #bgs > 0 then
+		--[[
 		if isCurrentXpac and not isClassicEra then
 			GBB.OptionsBuilder.SetRightSide()
-		end --else keep on same column as raid for classic era
+		end --else keep on same column as raid for classic era]]
 
 		GBB.OptionsBuilder.Indent(-10)
 		GBB.OptionsBuilder.AddHeaderToCurrentPanel(BATTLEGROUNDS)
@@ -224,7 +229,7 @@ local function GenerateExpansionPanel(expansionID)
 		GBB.OptionsBuilder.AddSpacerToPanel() 
 	end
 	
-	if not isClassicEra then
+	--if not isClassicEra then
 		local heroicOnly = CheckBoxChar("HeroicOnly", false)
 		local normalOnly = CheckBoxChar("NormalOnly", false)
 		local exclusiveUpdateHandler = function(updatedBox, mutualBox)
@@ -237,7 +242,7 @@ local function GenerateExpansionPanel(expansionID)
 		end
 		heroicOnly:OnSavedVarUpdate(exclusiveUpdateHandler(heroicOnly, normalOnly))
 		normalOnly:OnSavedVarUpdate(exclusiveUpdateHandler(normalOnly, heroicOnly))
-	end
+	--end
 	CheckBoxChar("FilterLevel",false)
 	CheckBoxChar("DontFilterOwn",false)
 

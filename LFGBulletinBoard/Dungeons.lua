@@ -654,10 +654,10 @@ end
 -- Generated in `/dungeons/{version}.lua` files
 local classicDungeonLevels = GBB.GetDungeonLevelRanges(GBB.Enum.Expansions.Classic)
 
-local cataDungeonKeys = GBB.GetSortedDungeonKeys(
+--[[local cataDungeonKeys = GBB.GetSortedDungeonKeys(
 	GBB.Enum.Expansions.Cataclysm,
 	{ GBB.Enum.DungeonType.Dungeon, GBB.Enum.DungeonType.Raid }
-);
+);]]
 
 local wotlkDungeonNames = GBB.GetSortedDungeonKeys(
 	GBB.Enum.Expansions.Wrath,
@@ -744,14 +744,13 @@ function GBB.GetDungeonSort(additonalCategories)
 		additonalCategories = {} --[[@as string[] ]]
 	end
 	local dungeonOrder = { 
-		GBB.VanillaDungeonKeys, tbcDungeonNames, wotlkDungeonNames, cataDungeonKeys, 
+		GBB.VanillaDungeonKeys, tbcDungeonNames, wotlkDungeonNames,
 		pvpNames, additonalCategories, GBB.Misc, debugNames
 	}
 
 	local vanillaDungeonSize = #GBB.VanillaDungeonKeys
 	local tbcDungeonSize = #tbcDungeonNames
 	local wotlkDungeonSize = #wotlkDungeonNames
-	local cataDungeonSize = #cataDungeonKeys
 	local debugSize = #debugNames
 
 	local tmp_dsort, concatenatedSize = ConcatenateLists(dungeonOrder)
@@ -761,7 +760,7 @@ function GBB.GetDungeonSort(additonalCategories)
 	GBB.MAXDUNGEON = vanillaDungeonSize
 	GBB.TBCMAXDUNGEON = vanillaDungeonSize  + tbcDungeonSize
 	GBB.WOTLKDUNGEONSTART = GBB.TBCMAXDUNGEON + 1
-	GBB.WOTLKMAXDUNGEON = wotlkDungeonSize + GBB.TBCMAXDUNGEON + cataDungeonSize
+	GBB.WOTLKMAXDUNGEON = wotlkDungeonSize + GBB.TBCMAXDUNGEON
 	GBB.ENDINGDUNGEONSTART = GBB.WOTLKMAXDUNGEON + 1
 	
 	-- used in Options.lua for drawing dungeon editboxes for search patterns 
