@@ -6,9 +6,13 @@
 ## DefaultState: enabled
 ## SavedVariables: GroupBulletinBoardDB
 ## SavedVariablesPerCharacter: GroupBulletinBoardDBChar
+
+embeds.xml
+
 LibGPIOptions.lua
 LibGPIMinimapButton.lua
 LibGPIToolBox.lua
+
 Chat.lua
 Localization.lua
 dungeons\wrath.lua
